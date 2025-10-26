@@ -305,10 +305,31 @@ def restore_rename(files):
                     continue
                 
                 # 检查旧路径是否已存在(且不是当前文件)
-                if os.path.exists(old_path) and old_path != file_path:
-                    # 这种情况说明旧文件名已被其他文件占用,不能恢复
-                    failed_files.append(f"{current_name}: 旧文件名 '{old_name}' 已被占用")
-                    continue
+                # 注意: Windows 不区分大小写, 需要用小写比较路径
+                is_same_file = (old_path.lower() == file_path.lower())
+                
+                if os.path.exists(old_path) and not is_same_file:
+                    # 真的被占用了,自动重命名为 xx(1), xx(2) 等
+                    dir_path = os.path.dirname(old_path)
+                    base_name = os.path.basename(old_path)
+                    
+                    # 分离文件名和扩展名
+                    if '.' in base_name:
+                        name_part = base_name.rsplit('.', 1)[0]
+                        ext_part = '.' + base_name.rsplit('.', 1)[1]
+                    else:
+                        name_part = base_name
+                        ext_part = ''
+                    
+                    # 查找可用的文件名
+                    counter = 1
+                    while True:
+                        new_old_path = os.path.join(dir_path, f"{name_part}({counter}){ext_part}")
+                        if not os.path.exists(new_old_path):
+                            old_path = new_old_path
+                            old_name = os.path.basename(old_path)
+                            break
+                        counter += 1
                 
                 # 恢复文件名
                 try:

@@ -26,6 +26,6 @@ echo ====================================
 echo 卸载完成!
 echo ====================================
 echo.
-echo 窗口将在 3 秒后自动关闭...
-timeout /t 3 /nobreak >nul
+echo 窗口将在 2 秒后自动关闭...
+timeout /t 2 /nobreak >nul
 exit /b 0

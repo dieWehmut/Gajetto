@@ -1,3 +1,3 @@
 # My Tools
 
-> -renameFiles
+> 1. renameFiles

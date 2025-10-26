@@ -84,6 +84,6 @@ echo 1. 选择一个或多个文件
 echo 2. 右键点击,选择"批量重命名"
 echo 3. 或选择"恢复重命名"
 echo.
-echo 窗口将在 3 秒后自动关闭...
-timeout /t 3 /nobreak >nul
+echo 窗口将在 2 秒后自动关闭...
+timeout /t 2 /nobreak >nul
 exit /b 0
